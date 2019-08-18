@@ -64,6 +64,7 @@
     "@types/node-fetch": "^2.3.2",
     "@types/ramda": "^0.25.33",
     "@types/request-promise": "^4.1.42",
-    "@types/serve-favicon": "^2.2.30"
+    "@types/serve-favicon": "^2.2.30",
+    "typescript": "^3.5.3"
   }
 }
