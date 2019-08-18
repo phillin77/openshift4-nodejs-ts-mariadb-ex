@@ -9,7 +9,7 @@
     "start": "node ./dist/src/main.js",
     "dev": "NODE_ENV=development nodemon ./dist/app/main.js",
     "build": "tsc -p tsconfig.json; cp -R ./src/server/public ./dist/src/server/public;",
-    "postinstall": "NODE_ENV=prod npm run build",
+    "postinstall": "npm run build",
     "clean": "find . -name '*.js' -not -path './node_modules/*' ! -name 'gulpfile.js' | xargs rm; find . -name '*.map' -not -path './node_modules/*' | xargs rm; rm -rf dist",
     "test": "./node_modules/mocha/bin/_mocha",
     "watch": "tsc -w -p tsconfig.json"
