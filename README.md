@@ -1,1 +1,1 @@
-# openshift4-nodejs-ts-only-ex
+# openshift4-nodejs-ts-mysql-ex
