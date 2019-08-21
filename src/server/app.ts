@@ -1,9 +1,9 @@
 /**
  * Server
- * start:  2019.08.18
- * update: 2019.08.18
+ * start:  2019.08.21
+ * update: 2019.08.21
  * version:
- *     2019.08.18 [ADD]  1st Version
+ *     2019.08.21 [ADD]  1st Version
  */
 
 import express = require('express');
@@ -18,6 +18,7 @@ import session = require('express-session');
 // import routes
 let index = require('./routes/index');
 let hello = require('./routes/hello');
+let mysql = require('./routes/mysql');
 
 // create express
 const app: express.Express = express();
@@ -44,6 +45,8 @@ app.get('/', index.handler);
 
 app.get('/hello', hello.handler);
 app.post('/hello', hello.handler);
+
+app.get('/mysql', mysql.handler);
 
 /**
  * Enables prelight (OPTIONS) requests made cross-domain.
