@@ -2,16 +2,18 @@ import { Request, Response, NextFunction } from 'express';
 import * as util from 'util';
 import mysql, { Connection } from 'mysql';
 
-let mysqlURL = process.env.OPENSHIFT_MYSQL_DB_URL || process.env.MYSQL_URL,
+let mysqlURL = process.env.OPENSHIFT_MARIADB_DB_URL || process.env.MARIADB_URL,
     mysqlURLLabel = "";
 
 if (mysqlURL == null) {
   var mysqlHost, mysqlPort, mysqlDatabase, mysqlPassword, mysqlUser;
   // If using multi-database modified by p.l.77 (MONGODB_DATABASE_SERVICE_NAME & MYSQL_DATABASE_SERVICE_NAME)
-  if (process.env.MYSQL_DATABASE_SERVICE_NAME) {
+  if (process.env.MARIADB_DATABASE_SERVICE_NAME) {
     var mysqlServiceName = process.env.MYSQL_DATABASE_SERVICE_NAME.toUpperCase();
     mysqlHost = process.env[mysqlServiceName + '_SERVICE_HOST'];
     mysqlPort = process.env[mysqlServiceName + '_SERVICE_PORT'];
+    if (mysqlServiceName==="MARIADB")  // For MariaDB, 以下3個設定維持跟 MySQL 一樣
+      mysqlServiceName = "MYSQL";
     mysqlDatabase = process.env[mysqlServiceName + '_DATABASE'];
     mysqlPassword = process.env[mysqlServiceName + '_PASSWORD'];
     mysqlUser = process.env[mysqlServiceName + '_USER'];
@@ -21,6 +23,8 @@ if (mysqlURL == null) {
     var mysqlServiceName = process.env.DATABASE_SERVICE_NAME.toUpperCase();
     mysqlHost = process.env[mysqlServiceName + '_SERVICE_HOST'];
     mysqlPort = process.env[mysqlServiceName + '_SERVICE_PORT'];
+    if (mysqlServiceName==="MARIADB")  // For MariaDB, 以下3個設定維持跟 MySQL 一樣
+      mysqlServiceName = "MYSQL";
     mysqlDatabase = process.env[mysqlServiceName + '_DATABASE'];
     mysqlPassword = process.env[mysqlServiceName + '_PASSWORD'];
     mysqlUser = process.env[mysqlServiceName + '_USER'];
@@ -73,9 +77,9 @@ var initDb = function(callback:any) {
     db = mysqlClient;
     dbDetails.databaseName = db.databaseName;
     dbDetails.url = mysqlURLLabel;
-    dbDetails.type = 'MySQL';
+    dbDetails.type = 'MariaDB';
 
-    console.log('Connected to MySQL at: %s', mysqlURL);
+    console.log('Connected to MariaDB at: %s', mysqlURL);
     callback(null);
   });
 };
@@ -91,7 +95,7 @@ exports.handler = function(req:Request, res:Response, next:NextFunction) {
   try {
     initDb(function(err:any){
       if (err) {
-        console.log('Error connecting to MySQL. Message:\n'+err);
+        console.log('Error connecting to MariaDB. Message:\n'+err);
         return;
       }
 

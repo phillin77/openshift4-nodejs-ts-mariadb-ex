@@ -1,1 +1,1 @@
-# openshift4-nodejs-ts-mysql-ex
+# openshift4-nodejs-ts-mariadb-ex
