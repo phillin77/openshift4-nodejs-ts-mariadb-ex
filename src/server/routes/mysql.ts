@@ -51,7 +51,7 @@ if (mysqlURL == null) {
   }
 }
 
-console.log(`mysqlURL: ${mysqlURL}`);
+// console.log(`mysqlURL: ${mysqlURL}`);
 
 let db:any = null,
     dbDetails:any = new Object();
@@ -82,7 +82,7 @@ var initDb = function(callback:any) {
 
 
 /* GET */
-exports.handler = async function(req:Request, res:Response, next:NextFunction) {
+exports.handler = function(req:Request, res:Response, next:NextFunction) {
   console.log('GET /mysql, headers = ', util.inspect(req.headers, { showHidden: false, depth: null, colors: true }));
   const reqdata = req.body;
   console.log('GET /mysql, body = ', util.inspect(reqdata, { showHidden: false, depth: null, colors: true }));
@@ -94,7 +94,6 @@ exports.handler = async function(req:Request, res:Response, next:NextFunction) {
         console.log('Error connecting to MySQL. Message:\n'+err);
         return;
       }
-      console.log("xxx");
 
       mysqlClient.query('SELECT 1 + 1 AS solution, NOW() as now', function(err, rows, fields) {
         if (err) {
